@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
 
 	pthread_mutex_lock(&data->mutex);
 	QImage image(&data->data, width, height, QImage::Format_RGBA8888);
-	image.fill(0);
 	QPainter painter(&image);
 	pthread_mutex_unlock(&data->mutex);
 
@@ -84,6 +83,7 @@ int main(int argc, char *argv[])
 		app.processEvents();
 
 		pthread_mutex_lock(&data->mutex);
+		image.fill(0);
 		page.mainFrame()->render(&painter, QWebFrame::ContentsLayer);
 		pthread_mutex_unlock(&data->mutex);
 
